@@ -22,8 +22,27 @@ public class CarInsurance {
      * or YearsWithoutDamage > age-18.
      */
     public double calculatePremium(int age, boolean isWoman, int yearsWithoutDamage) {
-        //TODO
-        return 0;
+
+        if (age < 18 || yearsWithoutDamage < 0 || yearsWithoutDamage > (age - 18)) {
+            throw new RuntimeException("Ugyldige inputværdier: Alder skal være mindst 18, og skadefri år skal være gyldige.");
+        }
+
+        double premiumPrice = basisPremium;
+
+        if(age < 25){
+            premiumPrice *= 1.25;
+        }
+        if(isWoman){
+            premiumPrice *= 0.95;
+        }
+        if(yearsWithoutDamage >= 3 && yearsWithoutDamage <= 5){
+            premiumPrice *= 0.85;
+        } else if(yearsWithoutDamage >= 6 && yearsWithoutDamage <= 8){
+            premiumPrice *= 0.75;
+        } else if(yearsWithoutDamage > 8){
+            premiumPrice *= 0.65;
+        }
+        return premiumPrice;
     }
 }
 
